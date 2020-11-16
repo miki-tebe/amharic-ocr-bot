@@ -24,4 +24,10 @@ bot.start(ctx => {
 
 bot.action('extractFromImage', Stage.enter('imageScene'));
 
-bot.launch(console.log('Bot launched'));
+const PRODUCTION = true;
+if (PRODUCTION) {
+    bot.telegram.setWebhook(`https://amharic-ocr-bot.herokuapp.com/${process.env.BOT_TOKEN}`).then(console.log);
+    bot.startWebhook(`/${process.env.BOT_TOKEN}`, null, process.env.PORT);
+} else {
+    bot.launch(() => console.log('Bot launched'));
+}
