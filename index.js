@@ -7,7 +7,7 @@ require('dotenv').config();
 const imageScene = require('./scenes/imageScene').imageScene;
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-const stage = new Stage(imageScene);
+const stage = new Stage([imageScene]);
 bot.use(session());
 bot.use(stage.middleware());
 
@@ -17,7 +17,7 @@ bot.start(ctx => {
     Where would you like to extract text from ?`;
 
     let options = Markup.inlineKeyboard([
-        Markup.callbackButton('extractFromImage'),
+        Markup.callbackButton('Extract from 🖼️', 'extractFromImage'),
     ]).extra();
     ctx.reply(message, options);
 });
