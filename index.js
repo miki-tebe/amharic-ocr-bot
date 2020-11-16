@@ -22,4 +22,6 @@ bot.start(ctx => {
     ctx.reply(message, options);
 });
 
+bot.action('extractFromImage', Stage.enter('imageScene'));
+
 bot.launch(console.log('Bot launched'));
