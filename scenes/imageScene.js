@@ -27,8 +27,8 @@ step2.on('photo', async (ctx) => {
         ctx.reply(`Sorry we couldn't extract any text from the image`);
     }
     ctx.reply('Lets try this again , please send me another image');
-    const currentStepIndex = ctx.wizard.cursor
-    return ctx.wizard.selectStep(currentStepIndex)
+    const currentStepIndex = ctx.wizard.cursor;
+    return ctx.wizard.selectStep(currentStepIndex);
 });
 
 step2.command('cancel', (ctx) => {

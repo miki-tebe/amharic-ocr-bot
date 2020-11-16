@@ -1,5 +1,3 @@
-const path = require('path');
-const fileManager = require('./fileManager');
 const { createWorker } = require('tesseract.js');
 const worker = createWorker();
 

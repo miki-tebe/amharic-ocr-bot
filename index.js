@@ -13,7 +13,7 @@ bot.use(stage.middleware());
 
 bot.start(ctx => {
     let userFirstName = ctx.message.from.first_name;
-    let message = ` Hello master ${userFirstName},\n
+    let message = ` Hello ${userFirstName},\n
     Where would you like to extract text from ?`;
 
     let options = Markup.inlineKeyboard([
@@ -29,5 +29,5 @@ if (PRODUCTION) {
     bot.telegram.setWebhook(`https://amharic-ocr-bot.herokuapp.com/${process.env.BOT_TOKEN}`).then(console.log);
     bot.startWebhook(`/${process.env.BOT_TOKEN}`, null, process.env.PORT);
 } else {
-    bot.launch(() => console.log('Bot launched'));
+    bot.launch(console.log('Bot launched'));
 }
