@@ -15,12 +15,11 @@ step2.on('photo', async (ctx) => {
     ctx.reply('I have received the image please wait while i extract the text');
     let photos = ctx.update.message.photo;
     const { file_id: fileId } = photos[photos.length - 1];
-    const { file_unique_id: fileUniqueId } = photos[photos.length - 1];
     const fileUrl = await ctx.telegram.getFileLink(fileId);
-    let imagePath = await fileManager.downloadFile(fileUrl, fileUniqueId, 'Image');
 
-    let text = await OCR.extractText(imagePath);
-    fileManager.deleteFile(imagePath);
+    let buffer = await fileManager.getBuffer(fileUrl);
+
+    let text = await OCR.extractText(buffer);
     if (text != 'Empty') {
         ctx.replyWithHTML(`The extracted text is: \n <b>${text}</b>`);
     } else {
