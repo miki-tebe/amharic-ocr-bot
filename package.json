@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "dotenv": "^8.2.0",
+    "https": "^1.0.0",
     "telegraf": "^3.38.0",
     "tesseract.js": "^2.1.4"
   },

@@ -8,8 +8,6 @@ let extractText = async (imagePath) => {
 
     const { data: { text } } = await worker.recognize(imagePath);
 
-    await worker.terminate();
-
     return text;
 }
 

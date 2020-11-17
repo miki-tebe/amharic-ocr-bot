@@ -1,43 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
+const https = require('https');
 
-const downloadFile = async (fileUrl, fileUniqueId, type) => {
-    const fileDir = 'images';
-    const splitFileUrl = fileUrl.split('.');
-    const fileFormat = splitFileUrl[splitFileUrl.length - 1];
-    const fileName = `${fileUniqueId}.${fileFormat}`;
-    const filePath = path.resolve(__dirname, `tmp/${fileDir}`, fileName);
-    const writer = fs.createWriteStream(filePath);
+const getBuffer = (source) => new Promise((resolve, reject) => {
+    https.get(source, (response) => {
+        const data = []
 
-    return axios({
-        method: 'get',
-        url: fileUrl,
-        responseType: 'stream',
-    }).then(response => {
-
-        return new Promise((resolve, reject) => {
-            response.data.pipe(writer);
-            let error = null;
-            writer.on('error', err => {
-                error = err;
-                writer.close();
-                reject(err);
+        response
+            .on('data', (chunk) => {
+                data.push(chunk)
+            })
+            .on('end', () => {
+                resolve(Buffer.concat(data))
+            })
+            .on('error', (err) => {
+                reject(err)
             });
-            writer.on('close', () => {
-                if (!error) {
-                    resolve(writer.path);
-                }
-            });
-        });
     });
-}
+});
 
-const deleteFile = (filePath) => {
-    fs.unlink(filePath, (err) => {
-        if (err) return;
-        console.log('file deleted');
-    })
-}
-
-module.exports = { downloadFile, deleteFile }
+module.exports = { getBuffer }
