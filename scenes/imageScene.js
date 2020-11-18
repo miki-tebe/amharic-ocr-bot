@@ -13,6 +13,7 @@ const step2 = new Composer();
 
 step2.on('photo', async (ctx) => {
     ctx.reply('I have received the image please wait while i extract the text');
+    ctx.telegram.sendChatAction(ctx.chat.id, 'typing');
     let photos = ctx.update.message.photo;
     const { file_id: fileId } = photos[photos.length - 1];
     const fileUrl = await ctx.telegram.getFileLink(fileId);
